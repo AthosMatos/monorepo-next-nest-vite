@@ -1,17 +1,26 @@
 
 
-> @repo/logger@0.0.0 build /home/athosmatos/Documents/GitHub/downloadProgress/packages/logger
-> bunchee
+> @monorepo/logger@0.0.0 build /home/athosmatos/Documents/GitHub/monorepo-next-nest-vite/packages/logger
+> pnpm run generate-exports && bunchee
 
+
+> @monorepo/logger@0.0.0 generate-exports /home/athosmatos/Documents/GitHub/monorepo-next-nest-vite/packages/logger
+> node ../scripts/generate-exports.mjs
+
+package.json exports already up to date.
+[33m![39m Cannot export `require` field with .js or .mjs extension in ESM package, only .cjs extensions are allowed
+[33m![39m   ./dist/cjs/index.js
 [?25l[1G[1G[32m⠋[39m Building...
 
 [1G[0K[1A[0K[1A[0K[32m⠙[39m Building...
 
 [1G[0K[1A[0K[1A[0K[32m⠹[39m Building...
 
-[1G[0K[1A[0K[1A[0K[1G[?25h[4mExports[24m  [4mFile[24m                  [4mSize[24m
-.        [1mdist/es/index.js[22m      136 B
-         [1mdist/cjs/index.cjs[22m    203 B
-         [2mdist/es/index.d.ts[22m    66 B
-         [2mdist/cjs/index.d.cts[22m  66 B
+[1G[0K[1A[0K[1A[0K[1G[?25h[4mExports[24m  [4mFile[24m                 [4mSize[24m
+.        [1mdist/es/index.mjs[22m    136 B
+         [1mdist/cjs/index.js[22m    136 B
+         [1mdist/es/index.js[22m     136 B
+         [2mdist/cjs/index.d.ts[22m  66 B
+         [2mdist/es/index.d.mts[22m  66 B
+         [2mdist/es/index.d.ts[22m   66 B
 [?25h

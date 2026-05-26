@@ -25,9 +25,9 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/platform-socket.io": "^11.1.18",
     "@nestjs/websockets": "^11.1.18",
-    "reflect-metadata": "^0.2.2", 
-    "rxjs": "^7.8.1",  
-    "@repo/logger": "workspace:*",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "@monorepo/logger": "workspace:*",
     "socket.io": "^4.8.3"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
     "globals": "^16.0.0",
-    "jest": "^30.0.0", 
+    "jest": "^30.0.0",
     "dotenv": "^17.4.1",
     "prettier": "^3.4.2",
     "source-map-support": "^0.5.21",
@@ -53,12 +53,11 @@
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.7.3",  
+    "typescript": "^5.7.3",
     "tsdown": "0.9.3",
     "typescript-eslint": "^8.20.0",
-     "@repo/eslint-config": "workspace:*",
-    "@repo/jest-presets": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
+    "@monorepo/eslint-config": "workspace:*",
+    "@monorepo/typescript-config": "workspace:*"
   },
   "jest": {
     "moduleFileExtensions": [

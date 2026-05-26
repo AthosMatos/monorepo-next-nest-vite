@@ -1,5 +1,5 @@
+import { log } from "@monorepo/logger";
 import { NestFactory } from '@nestjs/core';
-import { log } from "@repo/logger";
 import 'dotenv/config';
 import { AppModule } from './app.module';
 
