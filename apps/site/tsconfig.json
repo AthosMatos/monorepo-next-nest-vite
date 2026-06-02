@@ -8,7 +8,10 @@
         "name": "next"
       }
     ],
-    "strictNullChecks": true
+    "strictNullChecks": true,
+     "paths": {
+      "@constants/*": ["../../consts/*"]
+    }
   },
   "include": ["src", "next.config.ts", "next-env.d.ts", ".next/types/**/*.ts"]
 }
