@@ -8,9 +8,6 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   resolve: {
     conditions: ["source"],
-    // Force a single React copy so bundled workspace packages (e.g. @monorepo/ui)
-    // don't resolve their own nested React (the mobile app pins React 18, web uses 19).
-    dedupe: ["react", "react-dom"],
     alias: [
       {
         find: /^@constants\/(.*)$/,

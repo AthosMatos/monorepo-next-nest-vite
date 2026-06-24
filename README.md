@@ -1,6 +1,6 @@
-# Songbook
+# Monorepo: Next.js + NestJS + Vite
 
-A full-stack monorepo for **Songbook**, a musician's "second brain" for storing, developing, and organizing songs (lyrics, chords, tabs, audio, images) across web and mobile. Built with NestJS (API), Vite + React (web), and Expo (mobile), with shared packages and centralized tooling. See [CONTEXT.md](CONTEXT.md) for the domain glossary and [docs/adr/](docs/adr/) for architecture decisions.
+A full-stack monorepo combining Next.js, NestJS, and Vite with shared packages and centralized tooling.
 
 ## Table of Contents
 
@@ -22,9 +22,9 @@ This monorepo contains three complementary applications and several shared packa
 
 ### Applications
 
-- **API** ([`apps/api`](apps/api)) - NestJS backend server (Prisma + PostgreSQL, S3-compatible object storage)
-- **Web** ([`apps/web`](apps/web)) - Vite-powered React single-page application (the Songbook web client)
-- **Mobile** ([`apps/mobile`](apps/mobile)) - Expo (React Native) application (the Songbook mobile client)
+- **API** ([`apps/api`](apps/api)) - NestJS backend server with WebSocket support
+- **Site** ([`apps/site`](apps/site)) - Next.js server-side rendered application (port 3002)
+- **Web** ([`apps/web`](apps/web)) - Vite-powered React single-page application with real-time Socket.io support
 
 ### Shared Packages
 
@@ -33,11 +33,9 @@ This monorepo contains three complementary applications and several shared packa
 - **Config: ESLint** ([`packages/config-eslint`](packages/config-eslint)) - Centralized ESLint configuration
 - **Config: TypeScript** ([`packages/config-typescript`](packages/config-typescript)) - Centralized TypeScript configuration
 
-- **Core** ([`packages/core`](packages/core)) - Shared domain types, Zod schemas, fetch-based API client, and pure domain logic used by web and mobile
-
 ### Constants
 
-- **API Constants** ([`consts/api`](consts/api)) - Shared API constants (e.g. sync-state values)
+- **API Events** ([`consts/api`](consts/api)) - Shared event and type constants for API communication
 
 ## Prerequisites
 
@@ -83,10 +81,8 @@ pnpm dev
 
 This runs the dev task for all apps with their default configurations:
 - **API**: Runs on default NestJS port (usually 3000)
+- **Site**: Runs on port 3002
 - **Web**: Runs on Vite's default port (usually 5173)
-- **Mobile**: Starts the Expo dev server (Metro)
-
-> Local infrastructure (PostgreSQL + MinIO) runs via Docker — see [Development](#development).
 
 ### Or start individual applications:
 
@@ -94,11 +90,11 @@ This runs the dev task for all apps with their default configurations:
 # Start only the API
 pnpm dev --filter api
 
+# Start only the Site
+pnpm dev --filter site
+
 # Start only the Web app
 pnpm dev --filter web
-
-# Start only the Mobile app
-pnpm dev --filter mobile
 ```
 
 ## Available Scripts
@@ -125,6 +121,13 @@ All commands are run from the root directory and orchestrated by Turbo for cachi
 - `lint` - Run and fix ESLint issues
 - `format` - Format with Prettier
 
+**Site** (`apps/site`):
+- `dev` - Start Next.js dev server
+- `build` - Build for production
+- `start` - Start production server
+- `lint` - Run ESLint
+- `check-types` - Type-check with TypeScript
+
 **Web** (`apps/web`):
 - `dev` - Start Vite dev server
 - `build` - Build for production
@@ -132,48 +135,70 @@ All commands are run from the root directory and orchestrated by Turbo for cachi
 - `lint` / `lint:fix` - Run/fix ESLint
 - `format` / `format:check` - Format with Prettier
 
-**Mobile** (`apps/mobile`):
-- `dev` - Start the Expo dev server (Metro)
-- `android` / `ios` - Run on a device/simulator
-- `lint` - Run ESLint
-
 ## Project Structure
 
 ```
 monorepo-next-nest-vite/
 ├── apps/                          # Application packages
 │   ├── api/                        # NestJS backend server
-│   │   ├── prisma/                 # Prisma schema + migrations
 │   │   ├── src/
+│   │   │   ├── app.module.ts
+│   │   │   ├── app.controller.ts
+│   │   │   ├── app.service.ts
 │   │   │   └── main.ts             # Application entry point
 │   │   ├── package.json
 │   │   ├── tsconfig.json
 │   │   └── nest-cli.json
-│   ├── web/                        # Vite React SPA (web client)
+│   ├── site/                       # Next.js SSR application
 │   │   ├── src/
+│   │   │   └── app/                # Next.js App Router
+│   │   │       ├── layout.tsx
+│   │   │       ├── page.tsx
+│   │   │       └── styles.css
 │   │   ├── public/
 │   │   ├── package.json
-│   │   └── vite.config.ts
-│   └── mobile/                     # Expo React Native app (mobile client)
-│       ├── app/
+│   │   ├── next.config.ts
+│   │   └── tsconfig.json
+│   └── web/                        # Vite React SPA
+│       ├── src/
+│       │   ├── App.tsx
+│       │   ├── main.tsx
+│       │   └── index.css
+│       ├── public/
 │       ├── package.json
-│       └── app.json
+│       ├── vite.config.ts
+│       └── tsconfig.json
 ├── packages/                       # Shared packages
-│   ├── core/                       # Shared domain types, Zod schemas, API client, domain logic
 │   ├── config-eslint/              # ESLint configuration (extends to all apps)
+│   │   ├── index.js
+│   │   ├── next.js                 # Next.js-specific config
+│   │   ├── vite.js                 # Vite-specific config
+│   │   └── react.js                # React-specific config
 │   ├── config-typescript/          # TypeScript configuration (extends to all apps)
+│   │   ├── base.json
+│   │   ├── nextjs.json
+│   │   ├── vite.json
+│   │   └── react-*.json
 │   ├── logger/                     # Logging utility (@monorepo/logger)
-│   ├── ui/                         # Web UI components (@monorepo/ui)
-│   └── scripts/                    # Utility scripts (generate-exports.mjs)
+│   │   ├── src/
+│   │   │   └── index.ts
+│   │   ├── dist/                   # Built output (CJS and ESM)
+│   │   └── package.json
+│   ├── ui/                         # UI components (@monorepo/ui)
+│   │   ├── src/
+│   │   │   ├── counter-button/     # React button component
+│   │   │   └── link/               # React link component
+│   │   ├── dist/                   # Built output (CJS and ESM)
+│   │   └── package.json
+│   └── scripts/                    # Utility scripts
+│       └── generate-exports.mjs    # Auto-generate package exports
 ├── consts/                         # Shared constants
 │   └── api/
-│       └── apiEvents.ts            # Shared API constants (sync-state values)
-├── docs/adr/                       # Architecture Decision Records
-├── CONTEXT.md                      # Domain glossary
-├── docker-compose.yml              # Local PostgreSQL + MinIO
+│       └── apiEvents.ts            # API event constants
 ├── package.json                    # Root package configuration
 ├── pnpm-workspace.yaml             # pnpm workspace configuration
 ├── turbo.json                      # Turbo monorepo configuration
+├── pnpm-lock.yaml                  # Dependency lock file
 └── README.md                       # This file
 ```
 
@@ -216,41 +241,35 @@ test
 ### Application Integration
 
 ```
-┌─────────────────┐        ┌─────────────────┐
-│   Web (Vite)    │        │ Mobile (Expo)   │
-│   React SPA     │        │  React Native   │
-│   Port ~5173    │        │  Metro          │
-└────────┬────────┘        └────────┬────────┘
-         │   REST (TanStack Query)   │
-         └─────────────┬─────────────┘
-                       ▼
-              ┌─────────────────┐        ┌──────────────────┐
-              │  API (NestJS)   │───────►│   PostgreSQL     │
-              │  Prisma         │        │   (metadata)     │
-              │  Port ~3000     │───────►│  Object storage  │
-              └─────────────────┘        │  (R2 / MinIO)    │
-                       ▲                  └──────────────────┘
-                       │ presigned URLs (direct upload/playback)
-         ┌─────────────┴─────────────┐
-         │     packages/core         │
-         │  types · Zod · API client │
-         │  · domain logic           │
-         └───────────────────────────┘
+┌─────────────────┐
+│   Web (Vite)    │────────┐
+│   React SPA     │        │
+│   Port ~5173    │        │
+└─────────────────┘        │
+                           ├──► Socket.io
+                           │
+┌─────────────────┐        │
+│ Site (Next.js)  │        │
+│ SSR App         │────────┤
+│ Port 3002       │        │
+└─────────────────┘        │
+                           │
+┌─────────────────┐        │
+│  API (NestJS)   │◄───────┘
+│  Backend        │
+│  Port ~3000     │
+└─────────────────┘
+     ▲       │
+     │       ▼
+┌──────────────────────┐
+│   Shared Packages    │
+│ - logger             │
+│ - ui components      │
+│ - constants (events) │
+└──────────────────────┘
 ```
 
 ## Development
-
-### Local Infrastructure
-
-The API needs PostgreSQL and an S3-compatible object store. Both run locally via Docker:
-
-```bash
-docker-compose up -d          # start PostgreSQL + MinIO
-cp apps/api/.env.example apps/api/.env
-pnpm --filter api exec prisma migrate dev   # apply the schema
-```
-
-MinIO console is at http://localhost:9001 (see `docker-compose.yml` for credentials). In production, object storage is Cloudflare R2 (same S3 API).
 
 ### Running the Development Environment
 
@@ -271,12 +290,12 @@ To focus on a specific app:
 cd apps/api
 pnpm dev
 
-# Web development
-cd apps/web
+# Site development
+cd apps/site
 pnpm dev
 
-# Mobile development
-cd apps/mobile
+# Web development
+cd apps/web
 pnpm dev
 ```
 
@@ -284,8 +303,8 @@ From the root, you can also:
 
 ```bash
 pnpm dev --filter=api
-pnpm build --filter=web
-pnpm lint --filter=mobile
+pnpm build --filter=site
+pnpm lint --filter=web
 ```
 
 ### Using Shared Packages
@@ -294,11 +313,9 @@ All apps have access to shared packages via workspace imports:
 
 ```typescript
 // In any app, import from shared packages:
-import { log } from "@monorepo/logger";
+import { logger } from "@monorepo/logger";
 import { CounterButton } from "@monorepo/ui/counter-button";
-import { syncState } from "@constants/api/apiEvents";
-// Shared domain types, schemas, API client:
-import { songSchema, type Song } from "@monorepo/core";
+import { apiEvents } from "consts/api";
 ```
 
 The packages are automatically linked during `pnpm install` and built before apps build.
@@ -326,16 +343,18 @@ pnpm build
 ```
 
 This will:
-1. Build all packages (core, logger, ui, configs)
-2. Build all applications (api, web) with task dependencies respected
+1. Build all packages (logger, ui, configs)
+2. Build all applications (api, site, web) with task dependencies respected
 3. Output production artifacts:
    - API: `dist/`
+   - Site: `.next/`
    - Web: `dist/`
 
 ### Build Specific Apps
 
 ```bash
 pnpm build --filter=api
+pnpm build --filter=site
 pnpm build --filter=web
 ```
 
@@ -347,13 +366,17 @@ cd apps/api
 pnpm start:prod
 ```
 
+**Site**:
+```bash
+cd apps/site
+pnpm start
+```
+
 **Web**:
 ```bash
 cd apps/web
 pnpm preview
 ```
-
-**Mobile** is built/distributed via Expo (EAS Build), not `pnpm build`.
 
 ## Testing
 
