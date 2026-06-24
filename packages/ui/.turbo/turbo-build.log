@@ -1,26 +1,26 @@
+[6n[m]0;C:\Windows\system32\cmd.exe[?25h]0;C:\Windows\system32\cmd.exe [25l
+> @monorepo/ui@0.0.0 build C:\Users\Athos Matos\Documents\GitHub\monorepo-next-nest-vite\packages\ui
+> pnpm run generate-exports && bunchee[62X[5;1H[?25h[25l
+> @monorepo/ui@0.0.0 generate-exports C:\Users\Athos Matos\Documents\GitHub\monorepo-next-nest-vite\packages\ui
+> node ../scripts/generate-exports.mjs[73X[9;1H[?25hpackage.json exports already up to date.
+[?25l[32m⠋[m Building...
 
-
-> @monorepo/ui@0.0.0 build /home/athosmatos/Documents/GitHub/monorepo-next-nest-vite/packages/ui
-> pnpm run generate-exports && bunchee
-
-
-> @monorepo/ui@0.0.0 generate-exports /home/athosmatos/Documents/GitHub/monorepo-next-nest-vite/packages/ui
-> node ../scripts/generate-exports.mjs
-
-package.json exports already up to date.
-[?25l[1G[1G[32m⠋[39m Building...
-
-[1G[0K[1A[0K[1A[0K[32m⠙[39m Building...
-
-[1G[0K[1A[0K[1A[0K[32m⠹[39m Building...
-
-[1G[0K[1A[0K[1A[0K[1G[?25h[4mExports[24m           [4mFile[24m                          [4mSize[24m
-./link            [1mdist/cjs/link.js[22m              1.34 kB
-                  [1mdist/es/link.mjs[22m              1.25 kB
-                  [2mdist/cjs/link.d.ts[22m            372 B
-                  [2mdist/es/link.d.mts[22m            372 B
-./counter-button  [1mdist/cjs/counter-button.js[22m    1.92 kB
-                  [1mdist/es/counter-button.mjs[22m    1.78 kB
-                  [2mdist/es/counter-button.d.mts[22m  149 B
-                  [2mdist/cjs/counter-button.d.ts[22m  149 B
-[?25h
+[284C[32m[9;1H⠙[m Building...[K
+[K
+[K[284C[32m[9;1H⠹[m Building...[K
+[K
+[K[284C[32m[9;1H⠸[m Building...[K
+[K
+[K[284C[32m[9;1H⠸[m Building...[K
+[K
+[K[284C[9;1H[K
+[K
+[K[284C[4m[9;1HExports[24m[11X[4m[11CFile[24m[26X[4m[26CSize[24m   
+./link[12X[1m[97m[12Cdist/cjs/link.js[m              1.34 kB
+[18X[1m[97m[18Cdist/es/link.mjs[m              1.25 kB[?25h
+                  dist/es/link.d.mts            372 B
+                  dist/cjs/link.d.ts            372 B
+./counter-button  [1m[97mdist/cjs/counter-button.js[m    1.92 kB[K
+[1m[97m[18Cdist/es/counter-button.mjs[m    1.78 kB[K
+                  dist/es/counter-button.d.mts  149 B
+                  dist/cjs/counter-button.d.ts  149 B

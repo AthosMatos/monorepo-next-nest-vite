@@ -1,26 +1,24 @@
-
-
-> @monorepo/logger@0.0.0 build /home/athosmatos/Documents/GitHub/monorepo-next-nest-vite/packages/logger
-> pnpm run generate-exports && bunchee
-
-
-> @monorepo/logger@0.0.0 generate-exports /home/athosmatos/Documents/GitHub/monorepo-next-nest-vite/packages/logger
-> node ../scripts/generate-exports.mjs
-
-package.json exports already up to date.
-[33m![39m Cannot export `require` field with .js or .mjs extension in ESM package, only .cjs extensions are allowed
-[33m![39m   ./dist/cjs/index.js
-[?25l[1G[1G[32m⠋[39m Building...
-
-[1G[0K[1A[0K[1A[0K[32m⠙[39m Building...
-
-[1G[0K[1A[0K[1A[0K[32m⠹[39m Building...
-
-[1G[0K[1A[0K[1A[0K[1G[?25h[4mExports[24m  [4mFile[24m                 [4mSize[24m
-.        [1mdist/es/index.mjs[22m    136 B
-         [1mdist/cjs/index.js[22m    136 B
-         [1mdist/es/index.js[22m     136 B
-         [2mdist/cjs/index.d.ts[22m  66 B
-         [2mdist/es/index.d.mts[22m  66 B
-         [2mdist/es/index.d.ts[22m   66 B
-[?25h
+[6n[m]0;C:\Windows\system32\cmd.exe[?25h]0;C:\Windows\system32\cmd.exe [25l
+> @monorepo/logger@0.0.0 build C:\Users\Athos Matos\Documents\GitHub\monorepo-next-nest-vite\packages\logger
+> pnpm run generate-exports && bunchee[70X[5;1H[?25h[25l
+> @monorepo/logger@0.0.0 generate-exports C:\Users\Athos Matos\Documents\GitHub\monorepo-next-nest-vite\packages\logger
+> node ../scripts/generate-exports.mjs[81X[9;1H[?25hpackage.json exports already up to date.
+[33m![m Cannot export `require` field with .js or .mjs extension in ESM package, only .cjs extensions are allowed
+[33m![m   ./dist/cjs/index.js
+[?25l[32m⠋[m Building...
+[284C
+[284C[32m[9;1H⠙[m Building...[K
+[K
+[K[284C[32m[9;1H⠹[m Building...[K
+[K
+[K[284C[32m[9;1H⠸[m Building...[K
+[K
+[K[284C[32m[9;1H⠼[m Building...[K
+[K
+[K[284C[4m[9;1HExports[24m  [4mFile[24m[17X[4m[17CSize[24m[K
+.        [1m[97mdist/cjs/index.js[m    136 B[K
+[9X[1m[97m[9Cdist/es/index.mjs[m    136 B[K[?25h
+[1m[97m[9Cdist/es/index.js[m     136 B[K
+         dist/es/index.d.mts  66 B
+         dist/es/index.d.ts   66 B
+         dist/cjs/index.d.ts  66 B
